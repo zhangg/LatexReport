@@ -5,7 +5,7 @@
 \usetheme{Madrid}
 \begin{document}
 
-\title{Dataset and Data Register download tools}
+\title{Dataset and Data Upload Download Tools}
 \author{zhang gang}
 \institute{IHEP}
 
@@ -26,7 +26,7 @@
   \includegraphics[height=4cm,width=11cm,keepaspectratio]{data/datasetMethod.png}
   \begin{itemize}
     \item Two new tables: FC\_MetaDatasets and FC\_MetaDatasetFiles
-    \item I have test these dataset methods. All of them is useable,but I meet some problem for our use 
+    %\item I have test these dataset methods. All of them is useable,but I meet some problem for our use 
   \end{itemize}
 \end{frame}
 
@@ -39,27 +39,56 @@
   \includegraphics[height=4cm,width=11cm,keepaspectratio]{data/FC_MetaDatasets.png}
   \begin{itemize}
     \item We can get some useful information from these fields,like UID,GID... 
-    \item Maybe we coule use these fields to intensify our tools,like let user create their own datasets
-    \item Discuss: Naming rule of dataset,who have the right to create dataset...
+    %\item Maybe we coule use these fields to intensify our tools,like let user create their own datasets
+    \item Maybe we can have a better way to manager datasets, list dataset of a specified user or list datasets groupby userGroup
+    %\item Discuss: Naming rule of dataset,who have the right to create dataset...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{New dataset test}
+  \begin{itemize}
+    \item First test on badger02 with DIRAC version v6r10-pre8, these methods is available. 
+    \item Second test on besdirac02 with DIRAC version v6r10-pre15, something wrong with 'getFileByMetadata' step which result in basic dataset methods unavailable.
+    \item The latest test is on besdirac02 with DIRAC version v6r10-pre17,these methods is OK for server side, but find some problem with our BESDIRAC metadata management.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Matadata Manager}
   \begin{itemize}
-    \item Problem:Add file level metadata in metaquery when create a datasetname, match 0 files
-    \item List the all metadatas and find the problem:field 'runL' 'runH' are both fileMetaField and directoryMetaFields which
+    \item Problem: Add file level metadata in metaquery when create a dataset, match 0 files
+    \item List all metadatas and find the problem: field 'runL' 'runH' are both fileMetaFields and directoryMetaFields which
       result in the unmatch problem
   \hspace{0.5cm} 
   \includegraphics[height=10cm,width=15cm,keepaspectratio]{data/metaShow.png}
   %k\includegraphics[keepaspectratio]{data/metaShow.png}
+  %  \item Discuss: How to manager metadata
+  %    \begin{itemize}
+  %      \item Naming rule: Avoid two fields have the same meaning
+  %      \item Manager: Only authorized persion can change meta fields
+  %    \end{itemize}
+  %  \item Discuss: Naming rule of dataset,who have the right to create dataset...
+  \item Example: First,when create dataset with runL or runH, did not get the expected file list.The system treat 'runL','runH' as directorymeta fields. After delete runL,runH in directorymeta fields, it works
+  \item Another problem: The meaning of two metadata field is repeated, like 'bossVer' and 'BossVersion'
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Discussion}
+  \begin{itemize}
     \item Discuss: How to manager metadata
       \begin{itemize}
         \item Naming rule: Avoid two fields have the same meaning
-        \item Manager: Only authorized persion can change meta fields
+        \item Manager: Only authorized persion can change meta fields?
+      \end{itemize}
+    \item Discuss: Manager dataset
+      \begin{itemize}
+        \item Naming rule of dataset
+        \item Authorization: Who has the right to creat dataset. 
       \end{itemize}
   \end{itemize}
 \end{frame}
+
 \section{Data upload and download tools}
 \begin{frame}
   \frametitle{The location of files}
@@ -94,17 +123,17 @@
           \item By dataset name
             \begin{itemize}
                 \item User can download a whole dataset
-                \item Example: besdirac-upload-files datasetName
+                \item Example: besdirac-download-files datasetName
             \end{itemize}
           \item By meta query 
             \begin{itemize}
                 \item Download data by a dynamic query condition
-                \item Example: besdirac-upload-files resonance=jpsi bossVer=6.6.3 runL$>$100 runH$<$200 runL!=150
+                \item Example: besdirac-download-files resonance=jpsi bossVer=6.6.3 runL$>$100 runH$<$200 runL!=150
             \end{itemize}
           \item By dir in DFC
             \begin{itemize}
                 \item Download files under a given DFC dir
-                \item Example: besdirac-upload-files /bes/File/4260/6.6.3/data/all/round06 
+                \item Example: besdirac-download-files /bes/File/4260/6.6.3/data/all/round06 
             \end{itemize}
       \end{itemize}
   \end{itemize}
@@ -117,12 +146,13 @@
       \begin{itemize}
           \item Add a global error list, if file transfer failed, add the file to the list
           \item After the transfer, check error list, if not null, the retransfer files in list 
+          \item The function is not effective, need for continued improvements 
       \end{itemize}
     \item File checksum 
       \begin{itemize}
           \item First check the adler32 value of each file on SE and local dir, slow
-          \item Change to check the size of each of file, very fast
-          \item if not equal,then retransfer the file
+          \item Change to check the size of each of file, fast
+          \item If not equal,then retransfer the file
       \end{itemize}
   \end{itemize}
 \end{frame}
