@@ -1,4 +1,0 @@
-\beamer@endinputifotherversion {3.10pt}
-\beamer@sectionintoc {1}{数据集测试与封装}{2}{0}{1}
-\beamer@sectionintoc {2}{优化传输工具}{4}{0}{2}
-\beamer@sectionintoc {3}{撰写小论文}{6}{0}{3}
