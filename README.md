@@ -58,8 +58,9 @@ latex 幻灯片的基本写法,会逐步完善。
 ```
 
 
-=============
+
 latex 学习
+===========
 
 latex处理源文件，首先要知道文档类型。有\documentclass来提供。
 ```latex
@@ -97,4 +98,21 @@ empty 设置页眉、页脚均为空。
 \thispagestyle{style}
 ```
 来改变当前页的格式。
+
+
+大型文档：拆分源文件
+使用如下命令：
+```latex
+\include{filename} 不想换页插入的用\input{filename}
+
+\includeonly{filename,filename,...}
+```
+只有在includeonly命令包含下的filename才会生效
+
+使用syntonly 宏包可以让LATEX 快速的检查你的文档：LATEX 浏览你的
+文档，仅仅检查语法和所使用的命令是否正确，不会产生DVI 输出。
+```latex
+\usepackage{syntonly}
+\syntaxonly
+```
 

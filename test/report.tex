@@ -1,0 +1,122 @@
+\documentclass{beamer}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+\usetheme{Singapore}
+\usecolortheme{seahorse}
+%\usetheme{CambridgeUS}
+%\usecolortheme{seahorse}
+\usepackage{CJKutf8}
+%\setCJKmainfont{SimSun}
+
+\title{考核报告}
+\author{张刚}
+\institute{}
+
+\begin{document}
+\begin{CJK*}{UTF8}{}
+\CJKfamily{gbsn} %中文支持
+
+\maketitle
+
+%\begin{frame}
+%  \frametitle{}
+%  \tableofcontents
+%\end{frame}
+
+\section{数据集测试与封装}
+\begin{frame}
+  \frametitle{数据集测试}
+  \begin{itemize}
+    \item BES-Test,基于DIRAC版本v6r10-pre8,功能都是可用的 
+    \item BES-Production,基于DIRAC版本v6r10-pre15,发现问题并反馈。
+    \item 升级BES-Production的DIRAC版本为v6r10-pre17之后，重新测试功能可用。 
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{数据集功能封装}
+  \begin{itemize}
+    \item 对API进行了修改。
+    \begin{itemize}
+      \item 整理Badger.py中的API，删除旧的数据集功能。
+      \item 将原有将每个新功能封装成函数写进Badger.py
+    \end{itemize}
+    \item 通过调用Badger.py中的相关函数封装成客户端命令供用户使用。
+      \begin{itemize}
+        \item besdirac-dms-dataset-add
+        \item besdirac-dms-dataset-list
+        \item besdirac-dms-dataset-filelist
+        \item besdirac-dms-dataset-check 
+        \item ...
+      \end{itemize}
+    \item 使用方法举例
+      \begin{itemize}
+        \item besdirac-dms-dataset-add 663\_qqbar\_stream001 /bes/File bossVer=663 eventType=qqbar streamID=stream001
+        \item besdirac-dms-dataset-describe datasetname
+          \begin{itemize}
+            \item Status,Totalsize,NumberOfFiles,Owner,OwnerGroup
+          \end{itemize}
+      \end{itemize}
+    \item 将dataset相关功能写进用户使用手册。
+  \end{itemize}
+\end{frame}
+%\begin{frame}
+%  \frametitle{使用方法}
+%  \begin{itemize}
+%    \item 
+%  \end{itemize}
+%\end{frame}
+\section{优化传输工具}
+\begin{frame}
+  \frametitle{传输工具优化}
+  \begin{itemize}
+    \item 功能优化,提供不同参数选项。 
+      \begin{itemize}
+        \item -n ：参数为datasetname，下载该数据集所包含的文件。 
+          \begin{itemize}
+            \item besdirac-dms-get-files -n name1 
+          \end{itemize}
+        \item -m：参数为一个查询条件，下载符合条件的文件。
+          \begin{itemize}
+            \item besdirac-dms-get-files -m bossVer=664 resonance=jpsi runL>12345 
+          \end{itemize}
+        \item -r:参数为DFC中的目录，下载该目录下所有文件。
+          \begin{itemize}
+            \item besdirac-dms-get-files -r /bes/File/psipp/664p01/mc/qqbar/round04/stream001 
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{传输工具优化}
+  \begin{itemize}
+    \item 断点重传 
+      \begin{itemize}
+        \item 对每一个文件进行标记，初始标记为0,如果该文件下载成功，标记为1。 
+        \item 如果因为意外导致程序死掉，重新运行后，会从第一个标记为0的文件下载，实现断点重传。
+      \end{itemize}
+    \item 文件校验 
+      \begin{itemize}
+        \item 对下载前后文件的大小尽心对比。
+        \item 如果不一致，则重新下载；一致则表明下载成功。 
+      \end{itemize}
+    \item 将传输工具使用方法写到wiki，共用户参考。
+  \end{itemize}
+\end{frame}
+\section{撰写小论文}
+\begin{frame}
+  \frametitle{撰写小论文}
+  \begin{itemize}
+    \item 对前一段所做工作进行总结，撰写小论文 
+    \item 完成初稿，并已投到《计算机应用研究》。 
+    \item 找工作，准备笔试面试相关资料。
+  \end{itemize}
+\end{frame}
+\begin{frame}
+ \begin{center}
+  \LARGE 谢谢 
+ \end{center}
+\end{frame}
+\end{CJK*}
+\end{document}
