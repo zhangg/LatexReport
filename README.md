@@ -57,3 +57,44 @@ latex 幻灯片的基本写法,会逐步完善。
 \end{document}
 ```
 
+
+=============
+latex 学习
+
+latex处理源文件，首先要知道文档类型。有\documentclass来提供。
+```latex
+\documentclass[option]{class}
+```
+class 包含论文（article），信件，幻灯片等等。
+article 排版科技期刊、短报告、程序文档、邀请函等。
+report 排版多章节的长报告、短篇的书籍、博士论文等。
+book 排版书籍。
+
+Option:
+  缺省10pt。
+  缺省letterpaper。可以是a4paper，a5paper，legalpaper等等。
+  其他参数等用的时候再查。
+
+下面给出一个例子
+```latex
+\documentclass[11pt,twoside,a4paper]{article}
+```
+关于宏包：
+```latex
+\usepackage[option]{package}
+```
+页面样式
+```latex
+\pagestyle{style}
+```
+style 包括：
+plain 页眉为空，页脚由居中的的页码组成。这是默认的页面式样。
+headings 页眉由当前的章节标题和页码组成，页脚为空。
+empty 设置页眉、页脚均为空。
+
+可用
+```latex
+\thispagestyle{style}
+```
+来改变当前页的格式。
+
