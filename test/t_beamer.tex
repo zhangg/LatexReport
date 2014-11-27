@@ -1,0 +1,68 @@
+%start %
+\documentclass[]{beamer} 
+\usepackage{beamerthemesplit} %主题风格
+
+\usepackage{CJKutf8}
+
+
+\title{My Beamer template}
+%author 的高级形式
+\author{
+   \texorpdfstring{zhang gang
+                   \newline
+                   \href{mailto:zhanggang0517@139.com}
+                 {\footnotesize\ttfamily{zhanggang0517@139.com}}}
+                   {}
+   \thanks{hello,world}}
+%工作单位
+\institute{CMCC}
+
+\begin{document}
+\begin{CJK*}{UTF8}{} %中文支持
+\CJKfamily{gbsn}
+\maketitle
+
+%添加新ｓｌｉｄｅ的方法１．
+\frame{
+  \frametitle{Outline}
+  \tableofcontents
+}
+
+%添加第一部分，后续会每一个部分一个tex文件．暂时先全部放到一起.
+\section{Setction 1}
+\frame{
+  \frametitle{slide 1}
+  \begin{itemize} %slide里的每个条目
+    \item item1
+    \item item2
+  \end{itemize}
+
+  \begin{itemize}%演示递归的条目
+    \item item1
+      \begin{itemize}
+        \item{sub item1}
+      \end{itemize}
+  \end{itemize}
+}
+%添加新slide的方法２．
+\begin{frame}
+\frametitle{slide 2}
+Hello.
+\end{frame}
+
+%sectoin 2
+\section{Section 2}
+\frame{
+  \frametitle{slide 3}
+  \begin{itemize}
+    \item item1
+      \begin{itemize}
+        \item{sub item1,可以添加中文}
+      \end{itemize}
+  \end{itemize}
+}
+
+
+\end{CJK*}
+
+\end{document}
